@@ -17,6 +17,13 @@ st.title("Data Analysis On Titanic Data")
 data = sns.load_dataset('titanic')
 df = data.copy()
 
+# Fix data types to prevent Arrow serialization warnings
+for col in df.select_dtypes(include=['Int64', 'boolean']).columns:
+    if df[col].dtype == 'Int64':
+        df[col] = df[col].astype('int64')
+    elif df[col].dtype == 'boolean':
+        df[col] = df[col].astype('bool')
+
 # Markdown sections
 st.markdown("## Asking the basic questions")
 
